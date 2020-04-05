@@ -1,0 +1,402 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+##libraries
+
+```{r include=FALSE}
+library(data.table)
+library(lubridate)
+library(tidyr)
+library(zoo)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(rebus)
+library(stringi)
+
+
+```
+##loading
+
+```{r}
+xdata2_mar<- readRDS("../clean_data/ANP_mar2020_02.RDS")
+xdata2_terra<- readRDS("../clean_data/ANP_terra2020_02.RDS")
+
+```
+
+## xdata2 split date column 
+```{r}
+
+# 
+#   xdata2<- xdata2 %>% separate(`Month/Year`, sep="/", into = c("Month", "Year"))
+#   xdata2$Date <- as.yearmon(paste(xdata2$Year, xdata2$Month), "%Y %m")
+#  xdata2$`Oil m3` <- as.numeric(xdata2$`Oil m3`)
+#  
+ 
+ 
+  xdata2_mar<- xdata2_mar %>% separate(`Month/Year`, sep="/", into = c("Month", "Year"))
+  xdata2_mar$Date <- as.yearmon(paste(xdata2_mar$Year, xdata2_mar$Month), "%Y %m")
+  xdata2_mar$`Oil m3` <- as.numeric(xdata2_mar$`Oil m3`)
+  xdata2_mar$`Condensated  m3` <- as.numeric(xdata2_mar$`Condensated  m3`)
+   
+  xdata2_terra<- xdata2_terra %>% separate(`Month/Year`, sep="/", into = c("Month", "Year"))
+  xdata2_terra$Date <- as.yearmon(paste(xdata2_terra$Year, xdata2_terra$Month), "%Y %m")
+  xdata2_terra$`Oil m3` <- as.numeric(xdata2_terra$`Oil m3`)
+  xdata2_terra$`Condensated  m3` <- as.numeric(xdata2_terra$`Condensated  m3`)
+
+```
+## add a on shore off shore discriminator 
+```{r}
+xdata2_terra <- xdata2_terra %>%  mutate(place = "on shore")
+xdata2_mar <- xdata2_mar %>%  mutate(place = "off shore")
+
+xdata2 <- rbind(xdata2_mar, xdata2_terra)
+```
+
+## estimate daily production in bbls and monthly production in bbls
+```{r}
+
+xdata2 <- xdata2 %>% 
+  mutate(
+    "Oil bbl/d"                     = `Oil m3`                     / as.numeric(days_in_month(Date)) * 6.28981 ,
+    "Condensated bbl/d"             = `Condensated  m3`            / as.numeric(days_in_month(Date)) * 6.28981 ,
+    "Associated Gas 10e6 scf/d"     = `Associated Gas 10e3 m3`     / as.numeric(days_in_month(Date)) * 35.3147 / 10e3 ,
+    "Non Associated gas 10 6 scf/d" = `Non Associated gas 10e3 m3` / as.numeric(days_in_month(Date)) * 35.3147 / 10e3 ,
+    "Water bbl/d"                   = `Water prod m3`              / as.numeric(days_in_month(Date)) * 6.28981 
+    
+  )
+
+#saveRDS(xdata2, "../clean_data/xdata_jan2020.RDS")
+temp <-unique(xdata2$Basin)
+temp
+```
+
+
+```{r}
+
+xdata3 <- xdata2
+
+
+
+
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[27], "Parnaiba" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[26], "Parnaiba" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[25], "Solimoes" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[24], "Solimoes" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[22], "Parnaiba" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[21], "Solimoes" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[16], "Reconcavo" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[15], "Espirito Santo" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[14], "Espirito Santo" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[13], "Ceara" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[12], "Ceara" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[11], "Reconcavo" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[7], "Ceara" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[5], "Espirito Santo" )
+unique(xdata3$Basin)
+xdata3$Basin <- replace(xdata3$Basin, xdata3$Basin == temp[1], "Reconcavo" )
+xdata3$Basin<- as.character(xdata3$Basin)
+xdata3$Field<- as.character(xdata3$Field)
+temp<-unique(xdata3$Basin)
+temp
+
+
+xdata4 <- xdata3
+
+```
+
+```{r}
+#   fields <-unique(xdata3$Field)
+
+
+```
+
+```{r}
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^CR")) #%>% 
+ # filter(str_detect(Field, "O$")) 
+
+unique(ff$Field)
+```
+
+
+```{r}
+  
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "^CR"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "CREJOA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "CREJOA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "CREJOA" )
+
+
+```
+
+
+
+```{r}
+del<-xdata4 %>%
+  filter(str_detect(Field, "^CR")) #%>% 
+ # filter(str_detect(Field, "O$")) 
+
+unique(del$Field)
+```
+
+
+
+
+```{r}
+ 
+
+
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "^F"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "FAZENDA IMBE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "FAZENDA ONCA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[6], "FAZENDA BOA ESPERANCA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[7], "FAZENDA SANTO ESTEVAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[13], "FAZENDA BELÉM" )
+  
+  
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "^D"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "DOURADO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "DENTAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[7], "DENTAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[9], "DIAS D AVILA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "DO-RE-MI" )
+
+  
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "^CO"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "CONCEICAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[9], "CONCEICAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "CONCEICAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[6], "CONCEICAO DA BARRA" )
+  
+  
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "^CR"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "CREJOA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "CREJOA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "CREJOA" )
+
+
+
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "RREGO"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[1], "CORREGO CEDRO NORTE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[6], "CORREGO CEDRO NORTE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[7], "CORREGO CEDRO NORTE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "CORREGO DAS PEDRAS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[9], "CORREGO DAS PEDRAS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "CORREGO DAS PEDRAS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "CORREGO DOURADO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[11], "CORREGO DOURADO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[12], "CORREGO DOURADO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "CORREGO GRANDE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "CORREGO CEDRO NORTE SUL" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[8], "CORREGO CEDRO NORTE SUL" )
+  
+
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "TERRA"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "CANARIO DA TERRA" )
+  
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "^CI"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "CIDADE DE SAO MIGUEL DOS CAMPOS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[9], "CIDADE DE SAO MIGUEL DOS CAMPOS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "CIDADE DE SAO MIGUEL DOS CAMPOS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[7], "CIDADE DE SEBASTIÃO FERREIRA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[8], "CIDADE DE SEBASTIÃO FERREIRA" )
+
+
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^CAN"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[8], "CANCA LESTE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[12], "CANCA LESTE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[16], "CANCA LESTE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[11], "CANARIO DA TERRA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "CANCA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[14], "CANCA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[15], "CANCA" )
+
+  
+  ff<-xdata3 %>%
+  filter(str_detect(Field, "^CANG"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[1], "CANGOA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "CANGOA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "CANGOA" )
+ 
+  
+  ff<-xdata3 %>%
+  filter(str_detect(Field, "^CAR"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "CARMOPOLIS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[16], "CARMOPOLIS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[17], "CARMOPOLIS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "CARCARA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[15], "CARCARA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[18], "CARCARA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[11], "CARAPANAUBA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[13], "CARAPANAUBA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[14], "CARAPANAUBA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[12], "CARMOPOLIS NOROESTE" )
+
+    
+ ff<-xdata3 %>%
+  filter(str_detect(Field, "^CU"))  
+
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[1], "CURIMA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "CURIMA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "CURIMA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "CUPIUBA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "CUPIUBA" )
+
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^CA")) %>% filter(str_detect(Field, "O$")) 
+
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[1], "CACAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "CANARIO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[8], "CANARIO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "CANARIO" )
+
+
+
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^B"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "BIJUPIRA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[16], "BIJUPIRA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[17], "BIJUPIRA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[7], "BOA ESPERANCA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[20], "BOA ESPERANCA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[50], "BOA ESPERANCA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[9], "BAUNA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[19], "BAUNA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[23], "BAUNA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[12], "BUZIOS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[18], "BUZIOS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[22], "BUZIOS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[13], "BERBIGAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[21], "BERBIGAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[24], "BERBIGAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[14], "BALEIA ANA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[15], "BALEIA ANA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[32], "BAIXA DO ALGODÃO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[48], "BAIXA DO ALGODÃO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[49], "BAIXA DO ALGODÃO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[41], "BIGUA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[46], "BIGUA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[47], "BIGUA" )
+
+    
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^AN"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[7], "ANAMBE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[10], "ANAMBE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[11], "ANAMBE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "TARTARUGA VERDE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "LULA" )
+
+  
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^AC"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[1], "ACAJA-BURIZINHO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "ACAJA-BURIZINHO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "ACAJA-BURIZINHO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "ACAUA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "ACAUA" )
+  
+  
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^AR"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[8], "ARACAS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[9], "ARACAS LESTE" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[11], "ARRIBACA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[12], "ARACARI" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[13], "ARACUA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[16], "ARAPACU" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[17], "ARAPACU" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[18], "ARACAS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[19], "ARACAS" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[20], "ARACARI" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[21], "ARRIBACA" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[22], "ARACARI" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[23], "ARRIBACA" )
+
+  
+  
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^XA"))  
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[1], "XAREU" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "XAREU" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "XAREU" )
+
+
+ff<-xdata3 %>%
+  filter(str_detect(Field, "^DOM")) 
+
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[1], "DOM JOAO MAR" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[2], "DOM JOAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[3], "DOM JOAO MAR" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[4], "DOM JOAO MAR" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[5], "DOM JOAO" )
+  xdata4$Field <- replace(xdata4$Field, xdata4$Field == unique(ff$Field)[6], "DOM JOAO" )
+
+```
+
+
+```{r}
+ 
+xdata4 <- xdata4 %>%  mutate(Field =stri_trans_general(str = Field, 
+                                   id = "Latin-ASCII"))
+unique(xdata4$Field)
+```
+
+
+
+
+saveRDS(xdata4, "../clean_data/ANP_jan2020.RDS")
+
+```{r}
+
+test <- xdata2
+
+test <- test %>%  mutate(Field =stri_trans_general(str = Field, 
+                                   id = "Latin-ASCII"))
+
+unique(test$Field)
+```
+

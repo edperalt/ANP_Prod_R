@@ -1,0 +1,2265 @@
+---
+title: "ANP"
+output: html_notebook
+---
+
+prepare data from  [ANP](http://www.anp.gov.br/conteudo-do-menu-superior/31-dados-abertos/5538-producao-de-petroleo-e-gas-natural-nacional )
+
+"terra section"
+
+- One day I will learn to download it directly...  for norw it is a manual excercise
+
+- Every 2- three months I download the last file and update the last chunk
+
+## the files on disk
+```{r}
+terra_files <- list.files(path = "../downloaded_data/terra_org/")
+path <- "../downloaded_data/terra_org/"
+
+n <- length(terra_files)
+
+for (i in 1:n){
+  temp<- readLines(paste0(path,terra_files[i]))
+  assign(  paste0(terra_files[i]), temp )
+}
+
+
+header_names<- c("Year","Month/Year", "State", "Basin", "Field","Well", "Environment", "Instalation", "Oil m3", "Condensated  m3",  "Associated Gas 10e3 m3", "Non Associated gas 10e3 m3", "Water prod m3", "Gas Inj 10e3 m3", "Water inj for sec recovery m3", "Disposal water injm3", "Co2 inj 10e3 m3", "Nitrogen inj 10e3 m3", "steam water  inj tons", "Polimer inj m3", "inj other fluids m3")
+```
+
+## 1941
+
+```{r}
+
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1941-1966.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1941-1966.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+                  xdata_terra <-  read.csv(text = sanitized)
+                        names(xdata_terra)<- header_names
+
+
+```
+## 1967
+
+```{r}
+
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1941-1966.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1967-1970.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 1970
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1970-1974.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 1975
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1975-1977.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 1978
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1978-1980.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+## 1981
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1981-1982.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 1983
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1983.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+## 1984
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1984.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 1985
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1985.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 1986
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1986.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 1987
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1987.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 1988
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1988.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1989_prim6mester
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1989-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 1989_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1989-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1990_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1990-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1990_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1990-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1991_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1991-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1991_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1991-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1992_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1992-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1992_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1992-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1993_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1993-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1993_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1993-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1994_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1994-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1994_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1994-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1995_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1995-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1995_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1995-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1996_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1996-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1996_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1996-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 1997_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1997-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1997_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1997-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 1998_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1998-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1998_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1998-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 1999_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1999-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 1999_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-1999-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2000_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2000-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2000_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2000-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2001_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2001-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2001_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2001-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+## 2002_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2002-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2002_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2002-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 2003_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2003-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2003_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2003-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 2004_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2004-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2004_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2004-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 2005_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2005-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2005_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2005-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2006_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2006-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2006_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2006-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2007_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2007-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2007_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2007-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2008_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2008-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2008_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2008-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2009_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2009-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2009_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2009-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2010_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2010-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2010_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2010-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 2011_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2011-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2011_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2011-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+## 2012_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2012-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2012_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2012-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2013_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2013-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2013_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2013-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2014_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2014-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2014_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2014-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2015_1sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2015-1sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+
+## 2015_2sem
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2015-2sem.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2016_1trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2016-1trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2016_2trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2016-2trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2016_3trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2016-3trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2016_4trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2016-4trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2017_1trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2017-1trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2017_2trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2017-2trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2017_3trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2017-3trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2017_4trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2017-4trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2018_1trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2018-1trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2018_2trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2018-2trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2018_3trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2018-3trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2018_4trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2018-4trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+## 2019_1trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `producao-terra-2019-1trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2019_2trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `2019-producao-terra-2trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2019_3trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', `producao-terra-1989-1993.csv` )
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `2019-producao-terra-3trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2019_4trim
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\.\\2', `2019-producao-terra-4-trim.csv` )
+  #sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `2019-producao-terra-4trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+## 2020_Jan Feb
+
+```{r}
+
+    # 1. Remove the comma as thousand mark
+  sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\.\\2', `2020-producao-terra-1-trim.csv` )
+  #sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', `2019-producao-terra-4trim.csv` )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_terra<- rbind(xdata_terra, temp) 
+  
+
+```
+
+
+

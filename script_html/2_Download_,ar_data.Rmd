@@ -1,0 +1,376 @@
+---
+title: "Download data from ANP"
+output: html_notebook
+---
+
+```{r}
+library(data.table)
+```
+
+## download mar data
+```{r}
+
+mar_2020<- readLines("http://www.anp.gov.br/arquivos/acesso-informacao/dp/2020-producaomar.csv") # primer trimestre
+mar_2019<- readLines("http://www.anp.gov.br/arquivos/acesso-informacao/dp/2019-producaomar.csv")
+mar_2016_2018<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-2016-2018.csv")
+mar_2013_2015<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-2013-2015.csv")
+mar_2010_2012<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-2010-2012.csv")
+mar_2005_2009<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-2005-2009.csv")
+mar_2001_2004<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-2001-2004.csv")
+mar_1998_2000<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-1998-2000.csv")
+mar_1994_1997<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-1994-1997.csv")
+mar_1989_1993<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-1989-1993.csv")
+mar_1980_1988<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-1980-1988.csv")
+mar_1941_1979<- readLines("http://www.anp.gov.br/images/dadosabertos/producao/producao-mar-1941-1979.csv")
+
+
+#marfiles <- objects()
+
+header_names<- c("Year","Month/Year", "State", "Basin", "Field","Well", "Environment", "Instalation", "Oil m3", "Condensated  m3",  "Associated Gas 10e3 m3", "Non Associated gas 10e3 m3", "Water prod m3", "Gas Inj 10e3 m3", "Water inj for sec recovery m3", "Disposal water injm3", "Co2 inj 10e3 m3", "Nitrogen inj 10e3 m3", "steam water  inj tons", "Polimer inj m3", "inj other fluids m3")
+
+```
+
+#### 1941
+
+```{r}
+
+
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_1941_1979 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+   # if( i == 1) {
+            #temp <- read.csv(text = sanitized) 
+            xdata_mar <- read.csv(text = sanitized) 
+            names(xdata_mar)<- header_names
+    #        else {
+    #              temp <-  read.csv(text = sanitized)
+    #              xdata<- rbind(xdata, temp) 
+    #       }
+#}
+
+
+       
+            
+```
+
+
+#### 1980
+
+```{r}
+
+
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_1980_1988 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                   names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+
+
+
+```
+
+#### 1989
+
+```{r}
+
+
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_1989_1993 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+#### 1994
+
+```{r}
+
+
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_1994_1997 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+#### 1998
+
+```{r}
+
+
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_1998_2000 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+
+#### 2001
+
+```{r}
+
+
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_2001_2004 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+
+#### 2005
+
+```{r}
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_2005_2009 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+
+#### 2010
+
+```{r}
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_2010_2012 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+#### 2013
+
+```{r}
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_2013_2015 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+#### 2016
+
+```{r}
+
+  # 1. Remove the comma as thousand mark
+  #sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\2', marfiles[i])
+  sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_2016_2018 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+#### 2019
+
+```{r}
+
+  # 1. Remove the comma as thousand mark
+  sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\.\\2', mar_2019)
+  #sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_2016_2018 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+#### 2020 jan
+
+```{r}
+
+  # 1. Remove the comma as thousand mark
+  sanitized_mark <- gsub('(\\"\\"[0-9]+),([0-9]+\\"\\")', '\\1\\.\\2', mar_2020)
+  #sanitized_mark <- gsub('(\\"[0-9]+),([0-9]+\\")', '\\1\\.\\2', mar_2016_2018 )
+  # 2. Remove all double quotes
+ # 
+  sanitized_quotes <- gsub('\\"', '', sanitized_mark)
+ 
+# 3.  Paste it all together adding a newline characterra afterra each element
+#
+sanitized <- paste0(sanitized_quotes, collapse="\n") 
+  
+# load from the text file, creating a new data table
+
+
+    
+                  temp <-  read.csv(text = sanitized)
+                    names(temp)<- header_names
+                  xdata_mar<- rbind(xdata_mar, temp) 
+    
+```
+
+
+```{r}
+  
+## export data to disk, first bind with DF from Terra data clean prepare notebook.
+
+  xdata <- rbind(xdata_mar,xdata_terra)        
+     
+data.table::fwrite(xdata, file = "../clean_data/ANP_mar_terra_2020_02.csv")
+data.table::fwrite(xdata_mar, file = "../clean_data/ANP_mar_2020_02.csv")
+data.table::fwrite(xdata_terra, file = "../clean_data/ANP_terra_2020_02.csv")
+
+saveRDS(xdata, "../clean_data/ANP_mar_terra2020_02.RDS")
+saveRDS(xdata_mar   , "../clean_data/ANP_mar2020_02.RDS")
+saveRDS(xdata_terra , "../clean_data/ANP_terra2020_02.RDS")
+
+
+
+```
+
